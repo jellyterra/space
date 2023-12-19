@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+
+import os
+import subprocess
+import sys
+
+home    = os.getenv("HOME")
+
+username = sys.argv[1]
+
+subprocess.run(["ssh", "-tti", home+"/.ssh/space/"+username, "-p", "22222", username+"@127.0.0.1"]+sys.argv[2:])

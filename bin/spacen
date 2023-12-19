@@ -1,0 +1,31 @@
+#!/bin/bash
+. ~/.bashrc
+
+podman kill space
+podman rm space
+podman run -it \
+	-p 22:22222 \
+	--name space \
+	--network bridge \
+	--mac-address $(printf '%02X:%02X:%02X:%02X:%02X:%02X' $[RANDOM%256] $[RANDOM%256] $[RANDOM%256] $[RANDOM%256] $[RANDOM%256] $[RANDOM%256]) \
+	--security-opt label=disable \
+	--mount type=tmpfs,tmpfs-size=1G,destination=/run \
+	--mount type=tmpfs,tmpfs-size=8G,destination=/tmp \
+	--mount type=tmpfs,tmpfs-size=8G,destination=/dev/shm \
+	-v /dev:/host/dev \
+	-v /dev/bus:/dev/bus \
+	-v /dev/dri:/dev/dri \
+	-v /etc/bashrc:/host/etc/bashrc \
+	-v /etc/yum.repos.d:/host/etc/yum.repos.d \
+	-v /opt:/host/opt \
+	-v /tmp/transfer:/tmp/transfer \
+	-v /tmp/.X11-unix:/tmp/.X11-unix \
+	-v /usr:/host/usr \
+	-v /mass:/mass \
+	-v $SPACE/opt:/opt \
+	-v $SPACE/home:/home \
+	-v $SPACE/environment:/etc/environment \
+	-v $SPACE/bashrc:/etc/bashrc \
+	-v $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/tmp/$WAYLAND_DISPLAY \
+	-v $XDG_RUNTIME_DIR/pipewire-0:/tmp/pipewire-0 \
+	$1 /opt/spacerc

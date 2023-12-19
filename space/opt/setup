@@ -1,0 +1,44 @@
+#!/bin/bash
+
+ssh-keygen -A
+
+groupadd -g 7000 plugdev
+
+groupadd -g 8000 wayland
+groupadd -g 8001 x11
+
+i=0
+for user in $(ls /home)
+do
+	let "i=i+1"
+
+	groupadd -g 200$i $user
+	useradd -g 200$i -u 200$i $user
+
+	usermod -aG wayland $user
+	usermod -aG x11 $user
+
+	chown -R $user:$user /home/$user
+done
+
+rm -f /etc/yum.repos.d/*
+
+cp -r /host/etc/yum.repos.d/* /etc/yum.repos.d/
+
+dnf install	\
+dbus-x11	\
+java-1.8.0-openjdk-devel	\
+libX*	\
+libnsl	\
+libxcrypt-compat	\
+ncurses-compat-libs	\
+openssh-server	\
+pipewire-pulseaudio	\
+sdl12-compat	\
+strace	\
+wine	\
+xclip	\
+xorg-x11-server-Xwayland	\
+-y
+
+dbus-uuidgen > /etc/machine-id

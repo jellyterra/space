@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo -u $1 /opt/bin/authkey-gen
+mv /home/$1/.ssh/$1 /opt/keys/
+chown -R root:root /opt/keys/
