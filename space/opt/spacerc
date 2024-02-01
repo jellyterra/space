@@ -19,3 +19,4 @@ chmod 777 /tmp/trasfer
 dbus-daemon --system
 
 /sbin/sshd -D
+

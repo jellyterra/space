@@ -1,5 +1,0 @@
-#!/bin/bash
-. ~/.bashrc
-
-podman exec -it space /bin/su $1
-

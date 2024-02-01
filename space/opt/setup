@@ -27,10 +27,11 @@ cp -r /host/etc/yum.repos.d/* /etc/yum.repos.d/
 
 dnf install	\
 dbus-x11	\
-java-1.8.0-openjdk-devel	\
+java-17-openjdk-devel	\
 libX*	\
 libnsl	\
 libxcrypt-compat	\
+nano	\
 ncurses-compat-libs	\
 openssh-server	\
 pipewire-pulseaudio	\
