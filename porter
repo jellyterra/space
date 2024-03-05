@@ -1,0 +1,11 @@
+#!/usr/bin/python3
+
+import os
+import subprocess
+import sys
+
+home = os.getenv("HOME")
+
+port = sys.argv[1]
+
+subprocess.run(["ssh", "-NL", port+":127.0.0.1:"+port, "-p", "2222", "porter@127.0.0.1"])

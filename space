@@ -6,6 +6,8 @@ import sys
 
 home = os.getenv("HOME")
 
+subprocess.run(["podman", "start", "space"])
+
 if len(sys.argv) == 1:
     subprocess.run(["podman", "exec", "-ti", "space", "sudo", "-i"])
 else:

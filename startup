@@ -1,0 +1,20 @@
+#!/bin/bash
+. ~/.bashrc
+
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent
+
+eval $(ssh-agent -a $SSH_AUTH_SOCK)
+
+# Transfer X11 authority file
+touch /tmp/.X11-unix/xauth
+chmod 660 /tmp/.X11-unix/xauth
+cat $XAUTHORITY > /tmp/.X11-unix/xauth
+
+# Limited implmentation: string length of $DISPLAY may longer than 1.
+echo ${DISPLAY:1:1} > /tmp/.X11-unix/display
+
+podman start space
+
+# Uncomment the code if you ssh-keygen-ed a public key at space:/opt/auth and a private key at ~/.ssh/space
+#
+# ssh-add ~/.ssh/space

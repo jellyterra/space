@@ -1,5 +1,0 @@
-#!/bin/bash
-. ~/.bashrc
-
-ls $SPACE/opt/keys/
-mv $SPACE/opt/keys/* ~/.ssh/space/

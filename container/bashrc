@@ -1,0 +1,51 @@
+#!/bin/bash
+
+. /host/etc/bashrc
+
+export XDG_RUNTIME_DIR=/tmp/$UID
+
+# Audio stream service
+export PIPEWIRE_RUNTIME_DIR=/tmp
+
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent
+
+# Get the X11 authority file.
+export XAUTHORITY=/tmp/.X11-unix/xauth
+
+# Set X11 and Wayland display sockets
+export DISPLAY=:$(cat /tmp/.X11-unix/display)
+export WAYLAND_DISPLAY=wayland-0
+
+if [ ! $UID -eq '0' ]
+then
+
+#   If you store SSH public key at /opt/auth, uncomment the codes below.
+#
+#	if [ ! -e ~/.auth ]
+#	then
+#		cp /opt/auth ~/.auth
+#	fi
+
+	if [ ! -d $XDG_RUNTIME_DIR ]
+	then
+		mkdir -m 0700 $XDG_RUNTIME_DIR
+		ln -sf /tmp/wayland-0 $XDG_RUNTIME_DIR/
+
+		eval $(ssh-agent -a $SSH_AUTH_SOCK) &> /dev/null
+
+		pipewire-pulse &> /dev/null&
+	fi
+
+	eval $(dbus-launch)
+else
+
+	# When start a new container from an old snapshot with old user table,
+	# this function helps you change the home dirs to correct ones.
+	function ownback {
+		for user in $(ls /home)
+		do
+			chown -R $user:$user /home/$user
+		done
+	}
+
+fi

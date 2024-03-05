@@ -1,0 +1,49 @@
+#!/bin/bash
+
+groupadd -g 3001 wayland
+groupadd -g 3002 x11
+
+i=0
+for user in $(ls /home)
+do
+    let "i=i+1"
+
+    groupadd -g 200$i $user
+    useradd -g 200$i -u 200$i $user
+
+    usermod -aG wayland $user
+    usermod -aG x11 $user
+
+    chown -R $user:$user /home/$user
+done
+
+# Copy configuration.
+cp -r /host/etc/* /etc/
+
+dnf install \
+git \
+nano \
+ncurses-compat-libs \
+libnsl  \
+libxcrypt-compat \
+libXext-devel \
+sdl12-compat \
+psmisc \
+util-linux \
+xz \
+-y
+
+dnf install \
+dbus-x11 \
+java-17-openjdk-devel \
+openssh-server \
+pipewire-pulseaudio \
+wine \
+-y
+
+ssh-keygen -A
+dbus-uuidgen > /etc/machine-id
+
+# dnf install \
+# kicad-packages3d \
+# -y

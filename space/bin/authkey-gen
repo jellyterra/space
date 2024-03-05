@@ -1,7 +1,0 @@
-#!/bin/bash
-
-rm -rf ~/.ssh
-mkdir -m 0700 ~/.ssh
-cd ~/.ssh
-ssh-keygen -t ed25519 -f $USER
-mv $USER.pub auth

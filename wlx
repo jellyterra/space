@@ -1,0 +1,11 @@
+#!/bin/bash
+. ~/.bashrc
+
+export DISPLAY=:$1
+
+kwin_wayland --no-lockscreen --xwayland --xwayland-display $1 &
+
+sleep 1
+
+chmod 666 /tmp/.X11-unix/X$1
+xhost +

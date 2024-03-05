@@ -6,16 +6,20 @@ then
 	touch /etc/setup
 fi
 
-mkdir /run/dbus
+XDISPLAY=$(cat /tmp/.X11-unix/display)
 
-chown root:x11 /tmp/.X11-unix/X*
-chmod 660 /tmp/.X11-unix/X*
+chown root:x11 /tmp/.X11-unix/xauth
+chmod 660 /tmp/.X11-unix/xauth
+
+chown root:x11 /tmp/.X11-unix/X$XDISPLAY
+chmod 660 /tmp/.X11-unix/X$XDISPLAY
 
 chown root:wayland /tmp/wayland-0
 chmod 660 /tmp/wayland-0
 
 chmod 777 /tmp/trasfer
 
+mkdir /run/dbus
 dbus-daemon --system
 
 /sbin/sshd -De
