@@ -18,7 +18,7 @@ Utility scripts for workspace container management.
   <br/>```$ shutdown```
 - porter: Expose a port by SSH from container, listen on host. You have to prepare the ssh keypair for user ```porter``` first.
   <br/>```$ porter 2222```
-- wlx: Start an Xwayland server with 777 mode X11 socket and authority disabled on Wayland display. No container needed.
+- wlx: Start an Xwayland server with 666 mode X11 socket and authority disabled on Wayland display. No container needed.
   <br/>```$ wlx (X display number)```
 
 ### Container-side

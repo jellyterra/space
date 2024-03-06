@@ -29,6 +29,7 @@ libxcrypt-compat \
 libXext-devel \
 sdl12-compat \
 psmisc \
+procps-ng \
 util-linux \
 xz \
 -y
