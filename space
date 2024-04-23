@@ -1,15 +1,10 @@
-#!/usr/bin/python3
+#!/bin/bash
 
-import os
-import subprocess
-import sys
+podman start space
 
-home = os.getenv("HOME")
-
-subprocess.run(["podman", "start", "space"])
-
-if len(sys.argv) == 1:
-    subprocess.run(["podman", "exec", "-ti", "space", "sudo", "-i"])
-else:
-    username = sys.argv[1]
-    subprocess.run(["podman", "exec", "-ti", "space", "sudo", "-iu", username]+sys.argv[2:])
+if [ -z $1 ]
+then
+    podman exec -ti space sudo -i
+else
+    podman exec -ti space sudo -iu $1 ${@:2}
+fi
