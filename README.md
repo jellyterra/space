@@ -1,6 +1,9 @@
 # space
 Utility scripts for workspace container management.
 
+> [!NOTE]
+> You may want the more lightweight solution [space-bwrap](https://github.com/jellyterra/space-bwrap) .
+
 ## Usage
 
 1) Clone this repo.
